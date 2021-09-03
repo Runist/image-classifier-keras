@@ -154,7 +154,7 @@ def MobileNetV2_1_4(input_shape, num_classes, include_top=True, weights=None):
         height = 224
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.4_{}_no_top.h5'.format(height)
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.4_{}_no_top.h5'.format(height)
         weights_path = './pretrain_weights/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.4_{}_no_top.h5'.format(height)
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -164,7 +164,7 @@ def MobileNetV2_1_4(input_shape, num_classes, include_top=True, weights=None):
 
     x = model.layers[-1].output
     if include_top:
-        outputs = layers.Dense(num_classes, name='logits')(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
     model = models.Model(inputs=model.inputs, outputs=outputs, name='mobilenet_v2_1.4')
@@ -185,7 +185,7 @@ def MobileNetV2_1_3(input_shape, num_classes, include_top=True, weights=None):
         height = 224
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.3_{}_no_top.h5'.format(height)
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.3_{}_no_top.h5'.format(height)
         weights_path = './pretrain_weights/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.3_{}_no_top.h5'.format(height)
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -195,7 +195,7 @@ def MobileNetV2_1_3(input_shape, num_classes, include_top=True, weights=None):
 
     x = model.layers[-1].output
     if include_top:
-        outputs = layers.Dense(num_classes, name='logits')(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
     model = models.Model(inputs=model.inputs, outputs=outputs, name='mobilenet_v2_1.3')
@@ -216,7 +216,7 @@ def MobileNetV2_1_0(input_shape, num_classes, include_top=True, weights=None):
         height = 224
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.0_{}_no_top.h5'.format(height)
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.0_{}_no_top.h5'.format(height)
         weights_path = './pretrain_weights/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.0_{}_no_top.h5'.format(height)
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -226,7 +226,7 @@ def MobileNetV2_1_0(input_shape, num_classes, include_top=True, weights=None):
 
     x = model.layers[-1].output
     if include_top:
-        outputs = layers.Dense(num_classes, name='logits')(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
     model = models.Model(inputs=model.inputs, outputs=outputs, name='mobilenet_v2_1.0')
@@ -247,7 +247,7 @@ def MobileNetV2_7_5(input_shape, num_classes, include_top=True, weights=None):
         height = 224
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.75_{}_no_top.h5'.format(height)
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.75_{}_no_top.h5'.format(height)
         weights_path = './pretrain_weights/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.75_{}_no_top.h5'.format(height)
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -257,7 +257,7 @@ def MobileNetV2_7_5(input_shape, num_classes, include_top=True, weights=None):
 
     x = model.layers[-1].output
     if include_top:
-        outputs = layers.Dense(num_classes, name='logits')(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
     model = models.Model(inputs=model.inputs, outputs=outputs, name='mobilenet_v2_0.75')
@@ -278,7 +278,7 @@ def MobileNetV2_5_0(input_shape, num_classes, include_top=True, weights=None):
         height = 224
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.5_{}_no_top.h5'.format(height)
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.5_{}_no_top.h5'.format(height)
         weights_path = './pretrain_weights/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.5_{}_no_top.h5'.format(height)
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -288,7 +288,7 @@ def MobileNetV2_5_0(input_shape, num_classes, include_top=True, weights=None):
 
     x = model.layers[-1].output
     if include_top:
-        outputs = layers.Dense(num_classes, name='logits')(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
     model = models.Model(inputs=model.inputs, outputs=outputs, name='mobilenet_v2_0.50')
@@ -309,7 +309,7 @@ def MobileNetV2_3_5(input_shape, num_classes, include_top=True, weights=None):
         height = 224
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.35_{}_no_top.h5'.format(height)
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.35_{}_no_top.h5'.format(height)
         weights_path = './pretrain_weights/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.35_{}_no_top.h5'.format(height)
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -319,7 +319,7 @@ def MobileNetV2_3_5(input_shape, num_classes, include_top=True, weights=None):
 
     x = model.layers[-1].output
     if include_top:
-        outputs = layers.Dense(num_classes, name='logits')(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
     model = models.Model(inputs=model.inputs, outputs=outputs, name='mobilenet_v2_0.35')

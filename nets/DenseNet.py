@@ -105,7 +105,7 @@ def DenseNet(input_shape, blocks, num_classes, include_top=True, growth_rate=32,
     x = layers.GlobalAveragePooling2D(name='avg_pool')(x)
 
     if include_top:
-        outputs = layers.Dense(num_classes, name='logits')(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
 
@@ -123,7 +123,7 @@ def DenseNet121(input_shape, num_classes, include_top=True, growth_rate=32, redu
     model._name = 'densenet121'
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/densenet121_weights_tf_dim_ordering_tf_kernels_notop.h5'
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/densenet121_weights_tf_dim_ordering_tf_kernels_notop.h5'
         weights_path = './pretrain_weights/densenet121_weights_tf_dim_ordering_tf_kernels_notop.h5'
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -143,7 +143,7 @@ def DenseNet169(input_shape, num_classes, include_top=True, growth_rate=32, redu
     model._name = 'densenet169'
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/densenet169_weights_tf_dim_ordering_tf_kernels_notop.h5'
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/densenet169_weights_tf_dim_ordering_tf_kernels_notop.h5'
         weights_path = './pretrain_weights/densenet169_weights_tf_dim_ordering_tf_kernels_notop.h5'
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -162,7 +162,7 @@ def DenseNet201(input_shape, num_classes, include_top=True, growth_rate=32, redu
     model._name = 'densenet201'
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/densenet201_weights_tf_dim_ordering_tf_kernels_notop.h5'
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/densenet201_weights_tf_dim_ordering_tf_kernels_notop.h5'
         weights_path = './pretrain_weights/densenet201_weights_tf_dim_ordering_tf_kernels_notop.h5'
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))

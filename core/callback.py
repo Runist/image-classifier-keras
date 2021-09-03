@@ -10,9 +10,9 @@ from tensorflow.keras import optimizers
 
 
 class CosineAnnealingLRScheduler(optimizers.schedules.LearningRateSchedule):
-    def __init__(self, epochs, train_step, lr_max, lr_min, warmth_rate=0.2):
+    def __init__(self, total_step, lr_max, lr_min, warmth_rate=0.2):
         super(CosineAnnealingLRScheduler, self).__init__()
-        self.total_step = epochs * train_step
+        self.total_step = total_step
         self.warm_step = int(self.total_step * warmth_rate)
         self.lr_max = lr_max
         self.lr_min = lr_min

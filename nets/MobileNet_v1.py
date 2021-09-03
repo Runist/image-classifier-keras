@@ -104,7 +104,7 @@ def MobileNetV1(input_shape, num_classes, alpha, include_top=True):
     x = layers.GlobalAveragePooling2D()(x)
 
     if include_top:
-        outputs = layers.Dense(num_classes, name="logits")(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
 
@@ -127,7 +127,7 @@ def MobileNetV1_1_0(input_shape, num_classes, include_top=True, weights=None):
         height = 224
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/mobilenet_1_0_{}_tf_no_top.h5'.format(height)
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/mobilenet_1_0_{}_tf_no_top.h5'.format(height)
         weights_path = './pretrain_weights/mobilenet_1_0_{}_tf_no_top.h5'.format(height)
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -152,7 +152,7 @@ def MobileNetV1_7_5(input_shape, num_classes, include_top=True, weights=None):
         height = 224
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/mobilenet_7_5_{}_tf_no_top.h5'.format(height)
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/mobilenet_7_5_{}_tf_no_top.h5'.format(height)
         weights_path = './pretrain_weights/mobilenet_7_5_{}_tf_no_top.h5'.format(height)
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -177,7 +177,7 @@ def MobileNetV1_5_0(input_shape, num_classes, include_top=True, weights=None):
         height = 224
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/mobilenet_5_0_{}_tf_no_top.h5'.format(height)
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/mobilenet_5_0_{}_tf_no_top.h5'.format(height)
         weights_path = './pretrain_weights/mobilenet_5_0_{}_tf_no_top.h5'.format(height)
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -202,7 +202,7 @@ def MobileNetV1_2_5(input_shape, num_classes, include_top=True, weights=None):
         height = 224
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/mobilenet_2_5_{}_tf_no_top.h5'.format(height)
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/mobilenet_2_5_{}_tf_no_top.h5'.format(height)
         weights_path = './pretrain_weights/mobilenet_2_5_{}_tf_no_top.h5'.format(height)
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))

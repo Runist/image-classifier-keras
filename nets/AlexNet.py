@@ -11,7 +11,7 @@ from tensorflow.python.keras.utils import data_utils
 
 def AlexNet(input_shape, num_classes, include_top=True, weights=None):
     """
-    AlexNet网络结构
+    AlexNet网络构建
     :param input_shape: 网络输入shape
     :param num_classes: 分类数量
     :param include_top: 是否包含分类层
@@ -38,7 +38,7 @@ def AlexNet(input_shape, num_classes, include_top=True, weights=None):
     x = layers.Dense(2048, activation='relu')(x)
 
     if include_top:
-        outputs = layers.Dense(num_classes, name='logits')(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
 

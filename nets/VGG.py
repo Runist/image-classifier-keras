@@ -13,7 +13,7 @@ from core.utils import process_bar
 
 def VGG13(input_shape, num_classes, include_top=True, weights=None):
     """
-    VGG13网络结构
+    VGG13网络构建
     :param input_shape: 网络输入shape
     :param num_classes: 分类数量
     :param include_top: 是否包含分类层
@@ -52,7 +52,7 @@ def VGG13(input_shape, num_classes, include_top=True, weights=None):
     x = layers.Dense(4096, activation='relu', name='fc2')(x)
 
     if include_top:
-        outputs = layers.Dense(num_classes, name="logits")(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
 
@@ -63,7 +63,7 @@ def VGG13(input_shape, num_classes, include_top=True, weights=None):
 
 def VGG16(input_shape, num_classes, include_top=True, weights=None):
     """
-    VGG16网络结构
+    VGG16网络构建
     :param input_shape: 网络输入shape
     :param num_classes: 分类数量
     :param include_top: 是否包含分类层
@@ -105,15 +105,16 @@ def VGG16(input_shape, num_classes, include_top=True, weights=None):
     x = layers.Dense(4096, activation='relu', name='fc2')(x)
 
     if include_top:
-        outputs = layers.Dense(num_classes, name="logits")(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
 
     model = models.Model(inputs, outputs, name='vgg16')
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'
         weights_path = './pretrain_weights/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'
         if not os.path.exists(weights_path):
+            print("Downloading data from {}".format(url))
             urllib.request.urlretrieve(url, weights_path, process_bar)
 
         model.load_weights(weights_path, by_name=True, skip_mismatch=True)
@@ -123,7 +124,7 @@ def VGG16(input_shape, num_classes, include_top=True, weights=None):
 
 def VGG19(input_shape, num_classes, include_top=True, weights=None):
     """
-    VGG19网络结构
+    VGG19网络构建
     :param input_shape: 网络输入shape
     :param num_classes: 分类数量
     :param include_top: 是否包含分类层
@@ -168,16 +169,17 @@ def VGG19(input_shape, num_classes, include_top=True, weights=None):
     x = layers.Dense(4096, activation='relu', name='fc2')(x)
 
     if include_top:
-        outputs = layers.Dense(num_classes, name="logits")(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
 
     model = models.Model(inputs, outputs, name='vgg16')
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/vgg19_weights_tf_dim_ordering_tf_kernels_notop.h5'
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/vgg19_weights_tf_dim_ordering_tf_kernels_notop.h5'
         weights_path = './pretrain_weights/vgg19_weights_tf_dim_ordering_tf_kernels_notop.h5'
         if not os.path.exists(weights_path):
+            print("Downloading data from {}".format(url))
             urllib.request.urlretrieve(url, weights_path, process_bar)
 
         model.load_weights(weights_path, by_name=True, skip_mismatch=True)

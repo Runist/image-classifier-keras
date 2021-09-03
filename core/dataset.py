@@ -11,10 +11,11 @@ import cv2 as cv
 import numpy as np
 import tensorflow as tf
 from PIL import Image, ImageEnhance
+from core.config import args, preprocess_dict
 
 
 class Dataset:
-    def __init__(self, data_path, label_name, batch_size=4, target_size=(224, 224), aug=False):
+    def __init__(self, data_path, label_name, batch_size=4, target_size=(224, 224), aug=False, pretrain=True):
 
         self.batch_size = batch_size
         self.target_size = target_size
@@ -22,6 +23,13 @@ class Dataset:
         self.aug = aug
         self.label_name = label_name
         self.num_classes = len(self.label_name)
+        # 根据不同网络选择对应的预处理方法
+        for key in preprocess_dict.keys():
+            if key in args.network:
+                self.preprocess = preprocess_dict[key]
+        # 如果不使用imagenet的预训练权重，则置为使用常规归一化
+        if not pretrain:
+            self.preprocess = "normal"
 
         assert os.path.exists(self.data_path), "Can't find {}".format(self.data_path)
         self.set_image_info()
@@ -46,9 +54,6 @@ class Dataset:
             for image_path in image_group:
                 self.image_info.append({"image_path": image_path, "label": label_index})
 
-        # if self.aug:
-        #     random.shuffle(self.image_info)
-
     def read_image(self, image_id):
         """
         读取图像
@@ -57,7 +62,6 @@ class Dataset:
         """
         image_path = self.image_info[image_id]["image_path"]
         image = cv.imread(image_path)
-        # image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
 
         return image
 
@@ -69,15 +73,38 @@ class Dataset:
         """
         label_index = self.image_info[image_id]["label"]
         label = tf.one_hot(label_index, depth=self.num_classes)
+
         return label
 
-    def resize_image_with_pad(self, image, pad_value=128.0):
+    def preprocess_input(self, image):
+        if self.preprocess == "normal":
+            image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+            image /= 255.
+        elif self.preprocess == "tf":
+            image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+            image /= 127.5
+            image -= 1.
+        elif self.preprocess == 'torch':
+            image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+            image /= 255.
+            image -= [0.485, 0.456, 0.406]
+            image /= [0.229, 0.224, 0.225]
+        elif self.preprocess == "caffe":
+            image -= [103.939, 116.779, 123.68]
+
+        return image
+
+    def resize_image(self, image, pad_value=None):
         """
         resize图像，多余的地方用其他颜色填充
         :param image: 输入图像
         :param pad_value: 填充区域像素值
         :return: image_padded
         """
+        if pad_value is None:
+            image_resize = cv.resize(image, self.target_size, interpolation=cv.INTER_LINEAR)
+            return image_resize
+
         image_h, image_w = image.shape[:2]
         input_h, input_w = self.target_size
 
@@ -161,7 +188,7 @@ class Dataset:
         :return: image
         """
         image = np.array(image, np.float32) / 255
-        image = cv.cvtColor(image, cv.COLOR_RGB2HSV)
+        image = cv.cvtColor(image, cv.COLOR_BGR2HSV)
 
         h = random.uniform(-hue, hue)
         s = random.uniform(1, sat) if random.random() < .5 else 1/random.uniform(1, sat)
@@ -176,7 +203,7 @@ class Dataset:
         image[:, :, 1:][image[:, :, 1:] > 1] = 1
         image[image < 0] = 0
 
-        image = cv.cvtColor(image, cv.COLOR_HSV2RGB) * 255
+        image = cv.cvtColor(image, cv.COLOR_HSV2BGR) * 255
         image = image.astype(np.uint8)
 
         return image
@@ -189,7 +216,7 @@ class Dataset:
         :return: image
         """
         image = np.array(image, np.float32) / 255
-        hsv = cv.cvtColor(image, cv.COLOR_RGB2HSV)
+        hsv = cv.cvtColor(image, cv.COLOR_BGR2HSV)
         h, s, v = cv.split(hsv)
 
         value = random.uniform(-brightness_range, brightness_range)
@@ -199,7 +226,7 @@ class Dataset:
         v[v < 0] = 0.
 
         final_hsv = cv.merge((h, s, v))
-        image = cv.cvtColor(final_hsv, cv.COLOR_HSV2RGB) * 255
+        image = cv.cvtColor(final_hsv, cv.COLOR_HSV2BGR) * 255
         image = image.astype(np.uint8)
 
         return image
@@ -243,13 +270,10 @@ class Dataset:
                 if random.random() < 0.5 and self.aug:
                     image = self.random_translate(image)
 
-            image = self.resize_image_with_pad(image)
+            image = self.resize_image(image, pad_value=128.)
             image = image.astype(np.float32)
 
-            # RGB
-            # image -= [123.68, 116.68, 103.94]
-            # BGR
-            image -= [103.94, 116.68, 123.68]
+            image = self.preprocess_input(image)
 
             return image, label
 

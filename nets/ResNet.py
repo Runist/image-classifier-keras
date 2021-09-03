@@ -116,7 +116,7 @@ def ResNet(input_shape, num_classes, blocks_list, include_top=True):
 
     x = layers.GlobalAvgPool2D(name='avg_pool')(x)
     if include_top:
-        outputs = layers.Dense(num_classes, name="logits")(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = x
 
@@ -138,7 +138,7 @@ def ResNet50(input_shape, num_classes, include_top=True, weights=None):
     model._name = 'resnet50'
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5'
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5'
         weights_path = './pretrain_weights/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5'
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -154,7 +154,7 @@ def ResNet101(input_shape, num_classes, include_top=True, weights=None):
     model._name = 'resnet101'
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/resnet101_weights_tf_dim_ordering_tf_kernels_notop.h5'
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/resnet101_weights_tf_dim_ordering_tf_kernels_notop.h5'
         weights_path = './pretrain_weights/resnet101_weights_tf_dim_ordering_tf_kernels_notop.h5'
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))
@@ -170,7 +170,7 @@ def ResNet152(input_shape, num_classes, include_top=True, weights=None):
     model._name = 'resnet152'
 
     if weights == 'imagenet':
-        url = 'https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/resnet152_weights_tf_dim_ordering_tf_kernels_notop.h5'
+        url = 'https://github.com/Runist/image-classifier-keras/releases/download/v0.2/resnet152_weights_tf_dim_ordering_tf_kernels_notop.h5'
         weights_path = './pretrain_weights/resnet152_weights_tf_dim_ordering_tf_kernels_notop.h5'
         if not os.path.exists(weights_path):
             print("Downloading data from {}".format(url))

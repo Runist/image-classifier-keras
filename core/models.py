@@ -11,9 +11,12 @@ from nets.GoogLeNet import GoogLeNet
 from nets.VGG import VGG13, VGG16, VGG19
 from nets.ResNet import ResNet50, ResNet101, ResNet152
 from nets.DenseNet import DenseNet121, DenseNet169, DenseNet201, DenseNet264
+from nets.InceptionV3 import InceptionV3
+from nets.Xception import Xception
 from nets.MobileNet_v1 import MobileNetV1_1_0, MobileNetV1_7_5, MobileNetV1_5_0, MobileNetV1_2_5
 from nets.MobileNet_v2 import MobileNetV2_1_4, MobileNetV2_1_3, MobileNetV2_1_0, MobileNetV2_7_5, MobileNetV2_5_0, MobileNetV2_3_5
 from nets.SEResNet import SE_ResNet50, SE_ResNet101, SE_ResNet152
+from nets.EfficientNet import EfficientNetB0, EfficientNetB1, EfficientNetB2, EfficientNetB3, EfficientNetB4, EfficientNetB5, EfficientNetB6, EfficientNetB7
 from tensorflow.keras import layers, models
 
 
@@ -45,6 +48,10 @@ def get_model(network, input_shape, num_classes, include_top=True):
         model = DenseNet201(input_shape, num_classes, include_top=include_top, weights="imagenet")
     elif network == "densenet264":
         model = DenseNet264(input_shape, num_classes, include_top=include_top, weights=None)
+    elif network == "inception_v3":
+        model = InceptionV3(input_shape, num_classes, include_top=include_top, weights="imagenet")
+    elif network == "xception":
+        model = Xception(input_shape, num_classes, include_top=include_top, weights="imagenet")
     elif network == "mobilenet_v1_1.0":
         model = MobileNetV1_1_0(input_shape, num_classes, include_top=include_top, weights="imagenet")
     elif network == "mobilenet_v1_0.75":
@@ -71,6 +78,22 @@ def get_model(network, input_shape, num_classes, include_top=True):
         model = SE_ResNet101(input_shape, num_classes, include_top=include_top, weights="imagenet")
     elif network == "se_resnet152":
         model = SE_ResNet152(input_shape, num_classes, include_top=include_top, weights="imagenet")
+    elif network == "efficientnet-b0":
+        model = EfficientNetB0(num_classes, include_top=include_top, weights="imagenet")
+    elif network == "efficientnet-b1":
+        model = EfficientNetB1(num_classes, include_top=include_top, weights="imagenet")
+    elif network == "efficientnet-b2":
+        model = EfficientNetB2(num_classes, include_top=include_top, weights="imagenet")
+    elif network == "efficientnet-b3":
+        model = EfficientNetB3(num_classes, include_top=include_top, weights="imagenet")
+    elif network == "efficientnet-b4":
+        model = EfficientNetB4(num_classes, include_top=include_top, weights="imagenet")
+    elif network == "efficientnet-b5":
+        model = EfficientNetB5(num_classes, include_top=include_top, weights="imagenet")
+    elif network == "efficientnet-b6":
+        model = EfficientNetB6(num_classes, include_top=include_top, weights="imagenet")
+    elif network == "efficientnet-b7":
+        model = EfficientNetB7(num_classes, include_top=include_top, weights="imagenet")
     else:
         raise Exception("You don't select any model. Check config.py network name.")
 
@@ -79,7 +102,7 @@ def get_model(network, input_shape, num_classes, include_top=True):
         x = layers.Dropout(rate=0.5)(x)
         x = layers.Dense(1024)(x)
         x = layers.Dropout(rate=0.5)(x)
-        outputs = layers.Dense(num_classes, name="logits")(x)
+        outputs = layers.Dense(num_classes, name="prediction", activation="softmax")(x)
     else:
         outputs = model.layers[-1].output
 

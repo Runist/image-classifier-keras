@@ -141,7 +141,7 @@ def GoogLeNet(input_shape, num_classes, include_top=True, aux=False, weights=Non
     x = layers.Dropout(rate=0.4, name='output_dropout')(x)
 
     if include_top:
-        outputs = layers.Dense(num_classes, name='loss3/classifier')(x)
+        outputs = layers.Dense(num_classes, name='loss3/classifier', activation="softmax")(x)
     else:
         outputs = x
 

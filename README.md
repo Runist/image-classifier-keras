@@ -7,15 +7,15 @@ This is for beginners to be able to easily use image classification and design o
 ### Implemented Network
 
 - [x] AlexNet
-
 - [x] VGG
 - [x] GoogleNet
 - [x] ResNet
 - [x] MobileNet
 - [x] DenseNet
 - [x] SENet
-- [ ] EfficientNet
-- [ ] Xception
+- [x] EfficientNet
+- [x] InceptionV3
+- [x] Xception
 - [ ] ShuffeNet
 
 You can choose any network to train, the specific configuration is in *./core/config,py*.
@@ -33,17 +33,17 @@ For convenience, I have uploaded the ImageNet pre-training weights to release.
 1. clone this repository
 
 ```shell
-git clone https://github.com/Runist/ImageClassifier-keras.git
+git clone https://github.com/Runist/image-classifier-keras.git
 ```
 2. You need to install some dependency package.
 
 ```shell
-cd ImageClassifier-keras
+cd image-classifier-keras
 pip installl -r requirements.txt
 ```
 3. Download the **flower dataset**.
 ```shell
-wget https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/dataset.zip
+wget https://github.com/Runist/image-classifier-keras/releases/download/v0.2/dataset.zip
 unzip dataset.zip
 ```
 
@@ -55,7 +55,7 @@ python train.py
 You will get the following output on the screen:
 
 ```shell
-Downloading data from https://github.com/Runist/ImageClassifier-keras/releases/download/v0.1/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5
+Downloading data from https://github.com/Runist/image-classifier-keras/releases/download/v0.2/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5
 98%[=============================>]
 
 Preparing train resnet50.
@@ -71,14 +71,14 @@ python evaluate.py
 ```
 
 ```shell
-100%|███████████████████████| 364/364 [00:30<00:00, 11.82step/s, result=[ True]]
-accuracy = 0.8489, precision = 0.8590, recall = 0.8459
+100%|███████████████████████| 364/364 [00:26<00:00, 13.74step/s, accuracy=0.951]
+accuracy = 0.9505, precision = 0.9505, recall = 0.9516
 Confusion matrix: 
- [[56  2  0  2  3]
- [ 8 80  0  0  1]
- [ 0  1 59  1  3]
- [18  0  2 42  7]
- [ 2  0  5  0 72]]
+ [[62  0  0  0  1]
+ [ 4 85  0  0  0]
+ [ 0  2 59  0  3]
+ [ 0  0  0 68  1]
+ [ 1  2  3  1 72]]
 ```
 
 ## Other
