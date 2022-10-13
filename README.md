@@ -39,7 +39,7 @@ git clone https://github.com/Runist/image-classifier-keras.git
 
 ```shell
 cd image-classifier-keras
-pip installl -r requirements.txt
+pip install -r requirements.txt
 ```
 3. Download the **flower dataset**.
 ```shell
