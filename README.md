@@ -1,7 +1,7 @@
 # Image Classification 
 
 This is for beginners to be able to easily use image classification and design of the general code, with keras implementation, **It will be continuously updated!**
-
+If this works for you, please give me a star, this is very important to me.😊
 ## Introduction
 
 ### Implemented Network
